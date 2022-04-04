@@ -36,7 +36,7 @@ builder.Services.AddCors(o => o.AddPolicy("Development", builder =>
 }));
 
 //*****
-// Added for aspNetCore.Identety
+// Added for aspNetCore.Identetyadd
 
 builder.Services.AddIdentity<AppUser, IdentityRole<int>>()
     .AddEntityFrameworkStores<ApplicationDbContext>()

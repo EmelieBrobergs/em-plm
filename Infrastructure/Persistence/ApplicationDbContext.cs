@@ -23,16 +23,17 @@ public class ApplicationDbContext : IdentityDbContext<
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
+        
     }
 
-    public virtual DbSet<Company> Company { get; set; } = null!;
-    public virtual DbSet<Fitting> Fitting { get; set; } = null!;
-    public virtual DbSet<MmntList> MmntList { get; set; } = null!;
-    public virtual DbSet<MmntPoint> MmntPoint { get; set; } = null!;
-    public virtual DbSet<Style> Style { get; set; } = null!;
-    public virtual DbSet<SizeRange> SizeRange { get; set; } = null!;
-    public virtual DbSet<Size> Size { get; set; } = null!;
-    public virtual DbSet<Grading> Grading { get; set; } = null!;
+    public virtual DbSet<Company> Companies { get; set; } = null!;
+    public virtual DbSet<Fitting> Fittings { get; set; } = null!;
+    public virtual DbSet<Measurement> Measurements { get; set; } = null!;
+    public virtual DbSet<MeasurementPoint> MeasurementPoints { get; set; } = null!;
+    public virtual DbSet<Style> Styles { get; set; } = null!;
+    public virtual DbSet<SizeRange> SizeRanges { get; set; } = null!;
+    public virtual DbSet<Size> Sizes { get; set; } = null!;
+    public virtual DbSet<Grading> Gradings { get; set; } = null!;
 
 
 
@@ -40,6 +41,8 @@ public class ApplicationDbContext : IdentityDbContext<
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        optionsBuilder.EnableSensitiveDataLogging();
+
         if (!optionsBuilder.IsConfigured)
         {
             // TODO: Vill fixa detta !!
@@ -51,33 +54,55 @@ public class ApplicationDbContext : IdentityDbContext<
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder); // added for aspNetCore.Identity, EF Code first
+        new DbInitializer(modelBuilder).Seed();
+
+        modelBuilder.Entity<AppUser>(entity =>
+        {
+            entity.HasIndex(e => e.Email).IsUnique();
+        });
 
         modelBuilder.Entity<Company>(entity =>
         {
             entity.HasIndex(e => e.Name).IsUnique();
         });
 
-        modelBuilder.Entity<MmntPoint>(entity =>
-        {
-            entity.HasIndex(e => e.ShortName).IsUnique();
-        });
-
-
-        //modelBuilder.Entity<MmntList>().Property<string[]>("SizeRange").IsRowVersion().HasColumnName("SizeRange");
-
-        //modelBuilder.Entity<MmntPoint>(dob =>
+        //modelBuilder.Entity<MeasurementPoint>(entity =>
         //{
-        //    dob.ToTable("MmntList");
-        //    dob.Property(o => o.SizeRange).HasColumnName("SizeRange");
-        //    dob.HasIndex(e => e.ShortName).IsUnique();
+        //    entity.HasIndex(e => e.ShortName).IsUnique();  // NOTE: Funkar inte såhär!! Måste var combined keey isf..
         //});
 
-        //modelBuilder.Entity<MmntList>(ob =>
-        //{
-        //    ob.ToTable("MmntList");
-        //    ob.Property(o => o.SizeRange).HasColumnName("SizeRange");
-        //    ob.HasOne(o => o.MmntPoints).WithOne()
-        //    .HasForeignKey<List<MmntPoint>>();
-        //});
+
+        //modelBuilder.Entity<Grading>()
+        //   .HasOne<Size>(e => e.Size)
+        //   .WithMany(g => g.Gradings)
+        //   .HasForeignKey(s => s.MmntPoint)
+        //   .OnDelete(DeleteBehavior.Restrict);
+
+        //modelBuilder.Entity<Grading>()
+        //    .HasOne<MmntPoint>(e => e.MmntPoint)
+        //    .WithMany(g => g.Gradings)
+        //    .HasForeignKey(s => s.Size)
+        //    .OnDelete(DeleteBehavior.NoAction);
+
+        //modelBuilder.Entity<Grading>().Property(p => p.MmntPointId).ValueGeneratedNever();
+        //modelBuilder.Entity<Grading>().Property(p => p.SizeId).ValueGeneratedNever();
+
+
+        //modelBuilder.Entity<Grading>()
+        //    .HasKey(g => new { g.MmntPointId, g.SizeId }); // composite key
+
+        modelBuilder.Entity<Style>()
+            .Property(e => e.Tags)
+            .HasConversion(
+                v => string.Join(',', v), //till db
+                v => new List<string>(v.Split(',', StringSplitOptions.RemoveEmptyEntries))); //hämta från
+
+        //v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList()
+        //            .Distinct(StringComparer.OrdinalIgnoreCase)
+        //            .ToArray(), new ValueComparer<ICollection<string>>(
+        //            (c1, c2) => c1.SequenceEqual(c2),
+        //            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+        //            c => c.ToList()));
+
     }
 }

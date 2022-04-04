@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities
+﻿namespace Domain.Common.Enums
 {
     public enum UnitOfMeasureEnum
     {

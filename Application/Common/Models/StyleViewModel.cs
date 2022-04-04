@@ -1,11 +1,14 @@
-﻿
+﻿using Domain.Entities;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-
-namespace Domain.Entities
+namespace Application.Common.Models
 {
-    public class Style
+    public class StyleViewModel
     {
         public int Id { get; set; }
         public string StyleNumber { get; set; } = null!;
@@ -21,10 +24,8 @@ namespace Domain.Entities
         public List<string> Tags { get; set; } = null!;
         public ICollection<Measurement> Measurements { get; set; } = new List<Measurement>(); //var ska version av måttlista anges ? mha creation date ?
         public ICollection<Fitting> Fittings { get; set; } = new List<Fitting>();
-        
-        
+
         public int CompanyId { get; set; }
-        public Company Company { get; set; } = null!;
-        //public static System.Text.Json.Serialization.ReferenceHandler IgnoreCycles { get; }
+        //public Company Company { get; set; } = null!;
     }
 }

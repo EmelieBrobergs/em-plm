@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -7,14 +9,18 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities;
 
+// NOTE: Composit key of MmntPointid + SizeId, entity/table could be named "MmntPointSize" by convention..
+
 public class Grading
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    public int Value { get; set; }  //Will be counted in relation to value of column "below", but re calculated when setting basic size....
-    
-    //Forigen key
-    [ForeignKey("Size")]
+
     public int SizeId { get; set; }
     public Size Size { get; set; } = null!;
+
+
+    public int MeasurementPointId { get; set; }
+    public MeasurementPoint MeasurementPoint { get; set; } = null!;
+
+    public float Value { get; set; }  //A clculated value in relation to OrderdIndex and base size.Only base size have an actual value... If baseSize changed, the value here will be converted...as well.
 }

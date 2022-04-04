@@ -10,20 +10,18 @@ namespace Domain.Entities
 {
     public class Fitting
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         [MaxLength(50, ErrorMessage = "Maximum {1} characters allowed")]
         public string Name { get; set; } = null!;
         //public Array[]? Images { get; set; }  // hur ska detta sparasi db ? bilder ? format ?
         [MaxLength(ErrorMessage = "Maximum {1} characters allowed")]
         public string Comment { get; set; } = null!;
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime CreatedDate { get; set; }
-
-        //Foreign key 
-        [ForeignKey("Style")]
         public int StyleId { get; set; }
         public Style Style { get; set; } = null!;
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedDate { get; set; }
     }
 }

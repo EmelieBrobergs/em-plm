@@ -9,12 +9,15 @@ namespace Application.Common.Models
 {
     public class EditStyleViewModel
     {
-        public int? AssignedToUserId { get; set; }
+        public int Id { get; set; }
+        public string StyleNumber { get; set; } = null!;
         public string OrderNumber { get; set; } = null!;
+        public int CompanyId { get; set; }
+        public int? AssignedToUserId { get; set; }
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public string ProductType { get; set; } = null!;
         public string ProductGroup { get; set; } = null!;
-        public List<MmntList>? MmntLists { get; set; } = null!;
+        public List<string> Tags { get; set; } = null!;
     }
 }

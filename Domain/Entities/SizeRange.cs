@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
-        // TODO: Lista ut hur denna ska skrivas/kopplas !
+    // TODO: Lista ut hur denna ska skrivas/kopplas !
     public class SizeRange
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public List<Size> Sizes { get; set; } = null!;
 
-        public int BaseSizeId { get; set; } //Hur ska denna variabel hanteras?
+        public ICollection<Size> Sizes { get; set; } = null!;
 
-        //Foreign key 
-        [ForeignKey("MmntList")]
-        public int MmntListId { get; set; }
-        public MmntList MmntList { get; set; } = null!;
+        public string BaseSizeName { get; set; } //Hur ska denna variabel hanteras?, om inga Sizes = 0 ? om sizes loopa igenom och välj 38 / M som storlek by defult. Justera till valfri... "Typ en FK ??"
+
+        public int MeasurementId { get; set; }
+        public Measurement Measurement { get; set; } = null!;
     }
 }

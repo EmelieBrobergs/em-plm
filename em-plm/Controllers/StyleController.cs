@@ -2,9 +2,8 @@
 using Application.Common.Models;
 using AutoMapper;
 using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace em_plm.Controllers;
 
@@ -16,7 +15,7 @@ public class StyleController : ControllerBase
     private readonly IApplicationDbContext _applicationDbContext;
     private readonly IMapper _mapper;
 
-    public StyleController(ILogger<StyleController> logger, IApplicationDbContext applicationDbContext, IMapper mapper)
+    public StyleController(ILogger<StyleController> logger, IApplicationDbContext applicationDbContext, IMapper mapper )
 
     {
         _logger = logger;
@@ -24,25 +23,17 @@ public class StyleController : ControllerBase
         _mapper = mapper;
     }
 
-    //********************************
-    //- Get all styles : CompanyId (paginated serch ??)
-    //- add style : CompanyId
-    //- edit style : StyleId
-    //- arkive style : StyleId
-    //- delete style : StyleId
-    //- Add Fitting : StyleId, sampleName
-    //- Edit Fitting : FittingId
-    //- Delete Fitting : FittingId
-    //********************************
-
     [HttpPost]
-    public async Task<IActionResult> AddStyle(CancellationToken cancellationToken, AddStyleViewModel data)
+    public async Task<ActionResult<StyleViewModel>> Create(StyleViewModel styleViewModel, CancellationToken cancellationToken)
     {
+        var style = _mapper.Map<Style>(styleViewModel);
+
         try
         {
-            var style = _mapper.Map<Style>(data);
-            var result = await _applicationDbContext.Style.AddAsync(style, cancellationToken);
-            return Ok(result);
+            await _applicationDbContext.Styles.AddAsync(style, cancellationToken);
+            await _applicationDbContext.SaveChangesAsync(cancellationToken);
+          
+            return Ok(_mapper.Map<StyleViewModel>(style));
         }
         catch (Exception ex)
         {
@@ -50,14 +41,15 @@ public class StyleController : ControllerBase
         }
     }
 
-    [HttpGet]
-    public IActionResult GetStyle(CancellationToken cancellationToken, int styleId)
+    [HttpGet("{styleId}")]
+    public IActionResult GetStyle(int styleId, CancellationToken cancellationToken)
     {
         try
         {
-            var style = _applicationDbContext.Style.FirstOrDefault(s => s.Id == styleId);
+            var style = _applicationDbContext.Styles.FirstOrDefault(s => s.Id == styleId);
             if (style != null) return Ok(style);
             return NotFound("No style found with matching Id");
+
         }
         catch (Exception ex)
         {
@@ -65,14 +57,18 @@ public class StyleController : ControllerBase
         }
     }
 
-    [HttpGet("{companyId}")]
-    public IActionResult GetStyles(CancellationToken cancellation, int companyId)
+    [HttpGet("get-by-company/{companyId:int}")]
+    public async Task<ActionResult<StyleViewModel[]>> GetByCompany(int companyId, CancellationToken cancellationToken)
     {
         // TODO: Lägg till kontroll av JWT att användare tillhör företaget ?
         try
         {
-            var styles = _applicationDbContext.Style.Where(s => s.CompanyId == companyId);
-            if (styles.Any()) return Ok(styles);
+            var styles = _applicationDbContext.Styles
+                .Where(s => s.CompanyId == companyId)
+                .AsNoTracking();
+
+            if (await styles.AnyAsync(cancellationToken)) return Ok(await styles.ToArrayAsync(cancellationToken));
+
             return NotFound("No styles found on assosiated Company");
         }
         catch (Exception ex)
@@ -82,7 +78,7 @@ public class StyleController : ControllerBase
     }
 
     [HttpPatch]
-    public IActionResult EditStyle(CancellationToken cancellationToken, int StyleId, EditStyleViewModel model)
+    public async Task<ActionResult<StyleViewModel>> EditStyleAsync([FromBody] EditStyleViewModel model, CancellationToken cancellationToken)
     {
         if (model is null)
         {
@@ -91,22 +87,14 @@ public class StyleController : ControllerBase
 
         try
         {
-            var style = _applicationDbContext.Style.FirstOrDefault(s => s.Id == StyleId);
-            if (style != null)
-            {
-                style.AssignedToUserId = model.AssignedToUserId;
-                style.OrderNumber = model.OrderNumber;
-                style.Name = model.Name;
-                style.Description = model.Description;
-                style.ProductType = model.ProductType;
-                style.ProductGroup = model.ProductGroup;
-                //style.MmntLists = data.MmntLists // Ska denna in här, eller senare ?
+            var existingStyle = _applicationDbContext.Styles.FirstOrDefault(s => s.Id == model.Id);
 
-                _applicationDbContext.Style.Update(style);
-                return Ok(style);
-            };
-            return NotFound("Style Id not found");
+            if(existingStyle is null) { throw new Exception("Could not find styleto update."); }
 
+            _applicationDbContext.Entry(existingStyle).CurrentValues.SetValues(model);
+            await _applicationDbContext.SaveChangesAsync(cancellationToken);
+
+            return Ok(existingStyle);
         }
         catch (Exception ex)
         {

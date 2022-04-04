@@ -105,6 +105,43 @@ public class AppUserController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// To enter this endpoint the excisting JWT token needs to be valid.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    [HttpGet("{userId}")]
+    [Authorize]
+    public async Task<ActionResult> UpdateJwtToken(string userId)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                //NOTE: claims is allways 0, create claims to db...in ScopedRoleSeederService.
+                var claimList = User.Claims.ToList();
+                var roles = await _userManager.GetRolesAsync(user);
+                foreach (var role in roles)
+                {
+                    claimList.Add(new Claim(ClaimTypes.Role, role));
+                }
+
+                var token = _tokenService.GenerateJwtToken(user, claimList);
+                var userModel = _mapper.Map<UserViewModel>(user);
+                SigninResponseViewModel responseModel = new SigninResponseViewModel(); // TODO: Fix response type...
+                responseModel.AccessToken = token.ToString();
+                responseModel.User = userModel;
+                return Ok(responseModel);
+            }
+            return Unauthorized("The user information is not valid, please try to signin again.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpPatch]
     [Authorize]
     public async Task<ActionResult> EditUserAsync([FromBody] UserViewModel data, CancellationToken cancellationToken)
@@ -205,9 +242,11 @@ public class AppUserController : ControllerBase
             //return await SigninAsync(new )
             return Ok(fetchUser);
         }
+
         catch (Exception ex)
         {
             return Problem(ex.Message);
         }
     }
+ 
 }

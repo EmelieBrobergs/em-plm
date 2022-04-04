@@ -25,11 +25,11 @@ public class MmntPointController : ControllerBase
     // Förslag: Om mmntListId + shortName är samma = ser det som "samma mått punkt" om man vill jämföra förändingar. ? Samtiigt som det är OK att editer ShortName ?
 
     [HttpPost]
-    public async Task<IActionResult> AddMmntPoint(CancellationToken cancellationToken, MmntPoint mmntPoint)
+    public async Task<IActionResult> AddMmntPoint(CancellationToken cancellationToken, MeasurementPoint mmntPoint)
     {
         try
         { 
-            var result = await _applicationDbContext.MmntPoint.AddAsync(mmntPoint, cancellationToken);
+            var result = await _applicationDbContext.MeasurementPoints.AddAsync(mmntPoint, cancellationToken);
             return Ok(result);
         }
         catch (Exception ex)
@@ -43,7 +43,7 @@ public class MmntPointController : ControllerBase
     {
         try
         {
-            var mmntList = _applicationDbContext.MmntPoint.FirstOrDefault(m => m.Id == mmntPointId);
+            var mmntList = _applicationDbContext.MeasurementPoints.FirstOrDefault(m => m.Id == mmntPointId);
             if (mmntList != null) return Ok(mmntList);
             return NotFound("No matching mmntPoint found");
         }
@@ -59,12 +59,12 @@ public class MmntPointController : ControllerBase
         // TODO: Vilken väg är rätt att gå för att hämta alla mått i en måttlista? Vilken controller?
         try
         {
-            var mmntList = _applicationDbContext.MmntList.FirstOrDefault(m => m.Id == mmntListId);
+            var mmntList = _applicationDbContext.Measurements.FirstOrDefault(m => m.Id == mmntListId);
             if (mmntList != null)
             {
-                if (mmntList.MmntPoints.Any())
+                if (mmntList.MeasurementPoints.Any())
                 {
-                    return Ok(mmntList.MmntPoints);
+                    return Ok(mmntList.MeasurementPoints);
                 }
                 return NotFound("No mmntPoints found on this mmntList");
             }
@@ -77,20 +77,20 @@ public class MmntPointController : ControllerBase
     }
 
     [HttpPatch]
-    public IActionResult EditMmntPoint(CancellationToken cancellationToken, int mmntListId, MmntPoint newMmntPoint)
+    public IActionResult EditMmntPoint(CancellationToken cancellationToken, int mmntListId, MeasurementPoint newMmntPoint)
     {
         try
         {
-            var mmntPoint = _applicationDbContext.MmntPoint.FirstOrDefault(m => m.Id == newMmntPoint.Id);
+            var mmntPoint = _applicationDbContext.MeasurementPoints.FirstOrDefault(m => m.Id == newMmntPoint.Id);
             if (mmntPoint != null)
             {
                 // TODO: Se över detta, hur EDIT endpoint ska hentera FK.
                 mmntPoint.ShortName = newMmntPoint.ShortName;
                 mmntPoint.Description = newMmntPoint.Description;
                 mmntPoint.Tolerance = newMmntPoint.Tolerance;
-                mmntPoint.GradingId = newMmntPoint.GradingId;
+                //mmntPoint.GradingId = newMmntPoint.GradingId;
 
-                _applicationDbContext.MmntPoint.Update(mmntPoint);
+                _applicationDbContext.MeasurementPoints.Update(mmntPoint);
                 return Ok(mmntPoint);
             }
             return NotFound("MmntPoint with matching Id not found");

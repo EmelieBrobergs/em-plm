@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
+using Application.Common.Models;
 using AutoMapper;
+using Domain.Entities;
 
 namespace Application.Common.Mappings;
 
@@ -7,6 +9,8 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        CreateMap<StyleViewModel, Style>().ReverseMap();
+
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
     }
 

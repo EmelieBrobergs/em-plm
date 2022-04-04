@@ -38,8 +38,8 @@ public class ScopedRoleSeederService: IScopedRoleSeederService
         //
         // await CreateRole("Administrator", adminClaimsToAdd);
         await CreateRole("Administrator", claims);
-        await CreateRole("Basic user", claims); // FRÅGA: Går det att lägga till calims med vilken Company de har tillgång till?
         await CreateRole("Super user", claims);
+        await CreateRole("Basic user", claims); // FRÅGA: Går det att lägga till calims med vilken Company de har tillgång till?
 
         return await Task.FromResult(true);
     }

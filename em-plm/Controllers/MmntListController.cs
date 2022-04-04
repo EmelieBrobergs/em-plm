@@ -34,8 +34,8 @@ public class MmntListController : ControllerBase
     {
         try
         {
-            var mmntList = _mapper.Map<MmntList>(model);
-            var result = await _applicationDbContext.MmntList.AddAsync(mmntList, cancellationToken);
+            var mmntList = _mapper.Map<Measurement>(model);
+            var result = await _applicationDbContext.Measurements.AddAsync(mmntList, cancellationToken);
             return Ok(result);
         }
         catch (Exception ex)
@@ -49,7 +49,7 @@ public class MmntListController : ControllerBase
     {
         try
         {
-            var mmntList = _applicationDbContext.MmntList.FirstOrDefault(m => m.Id == mmntListId);
+            var mmntList = _applicationDbContext.Measurements.FirstOrDefault(m => m.Id == mmntListId);
             if (mmntList != null) return Ok(mmntList);
             return NotFound("No matching company found");
         }
@@ -64,7 +64,7 @@ public class MmntListController : ControllerBase
     {
         try
         {
-            var mmntList = _applicationDbContext.MmntList.Where(m => m.StyleId == styleId);
+            var mmntList = _applicationDbContext.Measurements.Where(m => m.StyleId == styleId);
             if (mmntList.Any()) return Ok(mmntList);
             return NotFound("No MmntLists found on assosiated Style");
         }
@@ -84,7 +84,7 @@ public class MmntListController : ControllerBase
 
         try
         {
-            var mmntList = _applicationDbContext.MmntList.FirstOrDefault(m => m.Id == mmntListId);
+            var mmntList = _applicationDbContext.Measurements.FirstOrDefault(m => m.Id == mmntListId);
             if (mmntList != null)
             {
                 mmntList.Name = model.Name;
@@ -92,7 +92,7 @@ public class MmntListController : ControllerBase
                 mmntList.UnitOfMeasure = model.UnitOfMeasure;
                 mmntList.StyleId = model.StyleId;
 
-                _applicationDbContext.MmntList.Update(mmntList);
+                _applicationDbContext.Measurements.Update(mmntList);
                 return Ok(mmntList);
             }
             return NotFound("MmntList with matching Id not found");

@@ -31,7 +31,7 @@ public class CompanyController : ControllerBase
         try
         {
             var company = _mapper.Map<Company>(name);
-            var result = await _applicationDbContext.Company.AddAsync(company, cancellationToken);
+            var result = await _applicationDbContext.Companies.AddAsync(company, cancellationToken);
             return Ok(result);
         }
         catch (Exception ex)
@@ -47,7 +47,7 @@ public class CompanyController : ControllerBase
         // TODO: Lägg till kontroll av JWT att användare tillhör företaget ?
         try
         {
-            var comapny = _applicationDbContext.Company.FirstOrDefault(c => c.Id == companyId);
+            var comapny = _applicationDbContext.Companies.FirstOrDefault(c => c.Id == companyId);
             if (comapny != null) return Ok(comapny);
             return NotFound("No matching company found");
         }
@@ -64,12 +64,12 @@ public class CompanyController : ControllerBase
 
         try
         {
-            var company = _applicationDbContext.Company.FirstOrDefault(c => c.Id == companyId);
+            var company = _applicationDbContext.Companies.FirstOrDefault(c => c.Id == companyId);
             if (company != null)
             {
                 company.Name = name;
 
-                _applicationDbContext.Company.Update(company);
+                _applicationDbContext.Companies.Update(company);
                 return Ok(company);
             };
             return NotFound("Company Id not found");
@@ -86,7 +86,7 @@ public class CompanyController : ControllerBase
     {
         try
         {
-            var result = _applicationDbContext.Company.Remove(company);
+            var result = _applicationDbContext.Companies.Remove(company);
             return Ok(result); // TODO: Fixa rätt returvärde check !
         }
         catch (Exception ex)
