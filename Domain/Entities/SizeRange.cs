@@ -5,7 +5,7 @@
     {
         public int Id { get; set; }
 
-        public ICollection<Size> Sizes { get; set; } = null!;
+        public ICollection<Size> Sizes { get; set; } = new List<Size>();
 
         public string BaseSizeName { get; set; } //Hur ska denna variabel hanteras?, om inga Sizes = 0 ? om sizes loopa igenom och välj 38 / M som storlek by defult. Justera till valfri... "Typ en FK ??"
 

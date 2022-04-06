@@ -35,10 +35,6 @@ public class ApplicationDbContext : IdentityDbContext<
     public virtual DbSet<Size> Sizes { get; set; } = null!;
     public virtual DbSet<Grading> Gradings { get; set; } = null!;
 
-
-
-
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging();
@@ -66,36 +62,15 @@ public class ApplicationDbContext : IdentityDbContext<
             entity.HasIndex(e => e.Name).IsUnique();
         });
 
-        //modelBuilder.Entity<MeasurementPoint>(entity =>
-        //{
-        //    entity.HasIndex(e => e.ShortName).IsUnique();  // NOTE: Funkar inte såhär!! Måste var combined keey isf..
-        //});
+        modelBuilder.Entity<Style>().HasIndex(s => new { s.StyleNumber, s.CompanyId }).IsUnique(true);
 
-
-        //modelBuilder.Entity<Grading>()
-        //   .HasOne<Size>(e => e.Size)
-        //   .WithMany(g => g.Gradings)
-        //   .HasForeignKey(s => s.MmntPoint)
-        //   .OnDelete(DeleteBehavior.Restrict);
-
-        //modelBuilder.Entity<Grading>()
-        //    .HasOne<MmntPoint>(e => e.MmntPoint)
-        //    .WithMany(g => g.Gradings)
-        //    .HasForeignKey(s => s.Size)
-        //    .OnDelete(DeleteBehavior.NoAction);
-
-        //modelBuilder.Entity<Grading>().Property(p => p.MmntPointId).ValueGeneratedNever();
-        //modelBuilder.Entity<Grading>().Property(p => p.SizeId).ValueGeneratedNever();
-
-
-        //modelBuilder.Entity<Grading>()
-        //    .HasKey(g => new { g.MmntPointId, g.SizeId }); // composite key
+        modelBuilder.Entity<MeasurementPoint>().HasIndex(m => new { m.ShortName, m.MeasurementId }).IsUnique(true);
 
         modelBuilder.Entity<Style>()
             .Property(e => e.Tags)
             .HasConversion(
-                v => string.Join(',', v), //till db
-                v => new List<string>(v.Split(',', StringSplitOptions.RemoveEmptyEntries))); //hämta från
+                v => string.Join(',', v), // send to db
+                v => new List<string>(v.Split(',', StringSplitOptions.RemoveEmptyEntries))); // fetch from db
 
         //v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList()
         //            .Distinct(StringComparer.OrdinalIgnoreCase)

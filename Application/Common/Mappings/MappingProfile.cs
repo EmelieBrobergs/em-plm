@@ -9,7 +9,11 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        // TODO: Decide one way of using this, etherlike bolow or implument the interface on entity class
         CreateMap<StyleViewModel, Style>().ReverseMap();
+        CreateMap<MeasurementViewModel, Measurement>().ReverseMap();
+        CreateMap<CompanyViewModel, Company>().ReverseMap();
+        CreateMap<SizeRangeViewModel,SizeRange>().ReverseMap();
 
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
     }

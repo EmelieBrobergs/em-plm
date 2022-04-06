@@ -1,5 +1,4 @@
-﻿using Domain.Common.Enums;
-using Domain.Entities;
+﻿using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace Application.Common.Models
 {
-    public class MmntListViewModel
+    public class CompanyViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public SizeRange SizeRange { get; set; } = null!;
-        public UnitOfMeasureEnum UnitOfMeasure { get; set; }
-        public int? StyleId { get; set; }
+        public ICollection<Style> Styles { get; set; } = new List<Style>();
     }
 }

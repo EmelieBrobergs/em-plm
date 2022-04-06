@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220404123633_2nd")]
-    partial class _2nd
+    [Migration("20220405064506_1st")]
+    partial class _1st
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -116,7 +116,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 1,
                             AccessFailedCount = 0,
                             CompanyId = 1,
-                            ConcurrencyStamp = "3a4034fe-8efd-47c8-9176-8e50106493df",
+                            ConcurrencyStamp = "3bc6f3bb-447d-4e5e-b93c-9a1f8e625b45",
                             Email = "em@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Emssi",
@@ -124,7 +124,7 @@ namespace Infrastructure.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EM@MAIL.COM",
                             NormalizedUserName = "EMHOUSE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMWm+Gk4LhJTV48ytD3INWqQ57kjs5kVdeoY2rkZNObbQvdqgH36EZ6hMF4b4Wft9w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELSyxmhcuw22ywBPlYjNtUsu1UdydA9ls5EJxXvNdPv+l36tjqTx+Y9DKFbnO83EkQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "emhouse"
@@ -134,7 +134,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 2,
                             AccessFailedCount = 0,
                             CompanyId = 3,
-                            ConcurrencyStamp = "e38e814f-3554-4c7b-b200-9d9b77dd4ce1",
+                            ConcurrencyStamp = "2a86854f-d9f4-43ad-b621-102c74a04829",
                             Email = "bella@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Bella",
@@ -142,7 +142,7 @@ namespace Infrastructure.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "BELLA@MAIL.COM",
                             NormalizedUserName = "BELLA@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHk3tm6PzhHX3itHTxSNU3k0oUhQhEY2RBEswBqAemTJO7y3uqog5CTENEj5vqEUfw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKHmANPEsqPLttMVo/DNFC4Q870J+5g1juPzhXg8KZA0u7ttafuDCk3Aus1xw4NCHQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "bella@mail.com"
@@ -152,7 +152,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 3,
                             AccessFailedCount = 0,
                             CompanyId = 1,
-                            ConcurrencyStamp = "44dbd80f-b8d3-4ed0-9a74-2390702de2d9",
+                            ConcurrencyStamp = "6a645d57-c935-44ef-ac6e-a1a26e0e2a31",
                             Email = "b@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Basic",
@@ -160,7 +160,7 @@ namespace Infrastructure.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "B@MAIL.COM",
                             NormalizedUserName = "B@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEG0ZGOmd2jUOX50GkFY1HhJV7p2nmJ2x6hD53+6HNBr2N3coo8c6B9u7jMkLux3Z8w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMrq7ldGvaelTVPuAegir8IatP+yDAN6p4/WEkkfQHBCdjCRtilLZPBEWbRTGBLqjQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "b@mail.com"
@@ -170,7 +170,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 4,
                             AccessFailedCount = 0,
                             CompanyId = 1,
-                            ConcurrencyStamp = "c29fd212-ce4e-46dc-ad0d-12a2c4d9dbcc",
+                            ConcurrencyStamp = "008bf76a-b23c-4d5d-8e7b-b7e76cf6161a",
                             Email = "emma@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Emma",
@@ -178,6 +178,7 @@ namespace Infrastructure.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EMMA@MAIL.COM",
                             NormalizedUserName = "EMMAH",
+                            PasswordHash = "AQAAAAEAACcQAAAAECQW1KMTteqIfqpna/Kx1IY8MdFUMl8X2ORxAs6rbDJi797dYh63u0+GBut6VJMHtQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "emmah"
@@ -3710,6 +3711,10 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("MeasurementId");
 
+                    b.HasIndex("ShortName", "MeasurementId")
+                        .IsUnique()
+                        .HasFilter("[MeasurementId] IS NOT NULL");
+
                     b.ToTable("MeasurementPoints");
 
                     b.HasData(
@@ -4269,7 +4274,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 85,
                             Description = "½ knee, at ½ inseam",
                             MeasurementId = 5,
-                            ShortName = "C",
+                            ShortName = "D",
                             Tolerance = 0.5f
                         },
                         new
@@ -4277,7 +4282,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 86,
                             Description = "½ leg opening,5cm above seam",
                             MeasurementId = 5,
-                            ShortName = "D1",
+                            ShortName = "E1",
                             Tolerance = 0.5f
                         },
                         new
@@ -4285,7 +4290,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 87,
                             Description = "½ leg opening",
                             MeasurementId = 5,
-                            ShortName = "D2",
+                            ShortName = "E2",
                             Tolerance = 0.3f
                         },
                         new
@@ -4293,7 +4298,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 67,
                             Description = "mudd height",
                             MeasurementId = 5,
-                            ShortName = "D3",
+                            ShortName = "1",
                             Tolerance = 0.3f
                         },
                         new
@@ -4301,7 +4306,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 68,
                             Description = "CF length",
                             MeasurementId = 5,
-                            ShortName = "E",
+                            ShortName = "F1",
                             Tolerance = 0.5f
                         },
                         new
@@ -4309,7 +4314,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 69,
                             Description = "Cb length",
                             MeasurementId = 5,
-                            ShortName = "F",
+                            ShortName = "F2",
                             Tolerance = 0.5f
                         },
                         new
@@ -4364,7 +4369,7 @@ namespace Infrastructure.Persistence.Migrations
                         {
                             Id = 76,
                             Description = "Cup height",
-                            MeasurementId = 6,
+                            MeasurementId = 7,
                             ShortName = "A",
                             Tolerance = 0.5f
                         },
@@ -4372,7 +4377,7 @@ namespace Infrastructure.Persistence.Migrations
                         {
                             Id = 77,
                             Description = "Cup width, at bottom",
-                            MeasurementId = 6,
+                            MeasurementId = 7,
                             ShortName = "B1",
                             Tolerance = 0.5f
                         },
@@ -4380,7 +4385,7 @@ namespace Infrastructure.Persistence.Migrations
                         {
                             Id = 78,
                             Description = "Cup width, at ½ height",
-                            MeasurementId = 6,
+                            MeasurementId = 7,
                             ShortName = "B2",
                             Tolerance = 0.5f
                         },
@@ -4388,7 +4393,7 @@ namespace Infrastructure.Persistence.Migrations
                         {
                             Id = 79,
                             Description = "String length, at neck",
-                            MeasurementId = 6,
+                            MeasurementId = 7,
                             ShortName = "C",
                             Tolerance = 0.5f
                         },
@@ -4396,7 +4401,7 @@ namespace Infrastructure.Persistence.Migrations
                         {
                             Id = 80,
                             Description = "String length, at waist",
-                            MeasurementId = 6,
+                            MeasurementId = 7,
                             ShortName = "D",
                             Tolerance = 2f
                         },
@@ -4404,7 +4409,7 @@ namespace Infrastructure.Persistence.Migrations
                         {
                             Id = 81,
                             Description = "Print width",
-                            MeasurementId = 6,
+                            MeasurementId = 7,
                             ShortName = "1",
                             Tolerance = 0.3f
                         },
@@ -4412,7 +4417,7 @@ namespace Infrastructure.Persistence.Migrations
                         {
                             Id = 82,
                             Description = "Print placement from seam",
-                            MeasurementId = 6,
+                            MeasurementId = 7,
                             ShortName = "2",
                             Tolerance = 0.3f
                         });
@@ -4814,7 +4819,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<string>("StyleNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Tags")
                         .IsRequired()
@@ -4823,6 +4828,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("StyleNumber", "CompanyId")
+                        .IsUnique();
 
                     b.ToTable("Styles");
 

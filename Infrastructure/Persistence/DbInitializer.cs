@@ -29,9 +29,6 @@ namespace Infrastructure.Persistence
                 new Company { Name = "Jesus Bak & Slakt AB", Id = 6 }
             );
 
-
-            //AppUser x 3
-
             //create user
             var appUser1 = new AppUser
             {
@@ -93,7 +90,7 @@ namespace Infrastructure.Persistence
             appUser3.PasswordHash = ph3.HashPassword(appUser3, "emmailCOM1");
 
             PasswordHasher<AppUser> ph4 = new PasswordHasher<AppUser>();
-            appUser3.PasswordHash = ph4.HashPassword(appUser4, "emmailCOM1");
+            appUser4.PasswordHash = ph4.HashPassword(appUser4, "emmailCOM1");
 
 
             //seed user
@@ -301,12 +298,12 @@ namespace Infrastructure.Persistence
                 new MeasurementPoint { Id = 88, ShortName = "A5", Description = "String length at waist", Tolerance = 0.5f, MeasurementId = 5 },
                 new MeasurementPoint { Id = 65, ShortName = "B", Description = "½ hip, 8cm from waist seam at CF", Tolerance = 0.5f, MeasurementId = 5 },
                 new MeasurementPoint { Id = 66, ShortName = "C", Description = "½ thigh", Tolerance = 0.5f, MeasurementId = 5 },
-                new MeasurementPoint { Id = 85, ShortName = "C", Description = "½ knee, at ½ inseam", Tolerance = 0.5f, MeasurementId = 5 },
-                new MeasurementPoint { Id = 86, ShortName = "D1", Description = "½ leg opening,5cm above seam", Tolerance = 0.5f, MeasurementId = 5 },
-                new MeasurementPoint { Id = 87, ShortName = "D2", Description = "½ leg opening", Tolerance = 0.3f, MeasurementId = 5 },
-                new MeasurementPoint { Id = 67, ShortName = "D3", Description = "mudd height", Tolerance = 0.3f, MeasurementId = 5 },
-                new MeasurementPoint { Id = 68, ShortName = "E", Description = "CF length", Tolerance = 0.5f, MeasurementId = 5 },
-                new MeasurementPoint { Id = 69, ShortName = "F", Description = "Cb length", Tolerance = 0.5f, MeasurementId = 5 },
+                new MeasurementPoint { Id = 85, ShortName = "D", Description = "½ knee, at ½ inseam", Tolerance = 0.5f, MeasurementId = 5 },
+                new MeasurementPoint { Id = 86, ShortName = "E1", Description = "½ leg opening,5cm above seam", Tolerance = 0.5f, MeasurementId = 5 },
+                new MeasurementPoint { Id = 87, ShortName = "E2", Description = "½ leg opening", Tolerance = 0.3f, MeasurementId = 5 },
+                new MeasurementPoint { Id = 67, ShortName = "1", Description = "mudd height", Tolerance = 0.3f, MeasurementId = 5 },
+                new MeasurementPoint { Id = 68, ShortName = "F1", Description = "CF length", Tolerance = 0.5f, MeasurementId = 5 },
+                new MeasurementPoint { Id = 69, ShortName = "F2", Description = "Cb length", Tolerance = 0.5f, MeasurementId = 5 },
                 new MeasurementPoint { Id = 70, ShortName = "G", Description = "Inseam length", Tolerance = 0.5f, MeasurementId = 5 },
 
                 // Style 4, Measurement 1 (bikini top)
@@ -317,13 +314,13 @@ namespace Infrastructure.Persistence
                 new MeasurementPoint { Id = 75, ShortName = "D", Description = "String length, at waist", Tolerance = 0.5f, MeasurementId = 6 },
 
                 // Style 4, Measurement 2
-                new MeasurementPoint { Id = 76, ShortName = "A", Description = "Cup height", Tolerance = 0.5f, MeasurementId = 6 },
-                new MeasurementPoint { Id = 77, ShortName = "B1", Description = "Cup width, at bottom", Tolerance = 0.5f, MeasurementId = 6 },
-                new MeasurementPoint { Id = 78, ShortName = "B2", Description = "Cup width, at ½ height", Tolerance = 0.5f, MeasurementId = 6 },
-                new MeasurementPoint { Id = 79, ShortName = "C", Description = "String length, at neck", Tolerance = 0.5f, MeasurementId = 6 },
-                new MeasurementPoint { Id = 80, ShortName = "D", Description = "String length, at waist", Tolerance = 2f, MeasurementId = 6 },  // NOTE: Revised tolerance value
-                new MeasurementPoint { Id = 81, ShortName = "1", Description = "Print width", Tolerance = 0.3f, MeasurementId = 6 },  // NOTE: Added new
-                new MeasurementPoint { Id = 82, ShortName = "2", Description = "Print placement from seam", Tolerance = 0.3f, MeasurementId = 6 } // NOTE: Added new
+                new MeasurementPoint { Id = 76, ShortName = "A", Description = "Cup height", Tolerance = 0.5f, MeasurementId = 7 },
+                new MeasurementPoint { Id = 77, ShortName = "B1", Description = "Cup width, at bottom", Tolerance = 0.5f, MeasurementId = 7 },
+                new MeasurementPoint { Id = 78, ShortName = "B2", Description = "Cup width, at ½ height", Tolerance = 0.5f, MeasurementId = 7 },
+                new MeasurementPoint { Id = 79, ShortName = "C", Description = "String length, at neck", Tolerance = 0.5f, MeasurementId = 7 },
+                new MeasurementPoint { Id = 80, ShortName = "D", Description = "String length, at waist", Tolerance = 2f, MeasurementId = 7 },  // NOTE: Revised tolerance value
+                new MeasurementPoint { Id = 81, ShortName = "1", Description = "Print width", Tolerance = 0.3f, MeasurementId = 7 },  // NOTE: Added new
+                new MeasurementPoint { Id = 82, ShortName = "2", Description = "Print placement from seam", Tolerance = 0.3f, MeasurementId = 7 } // NOTE: Added new
             );
 
             ////******************************************************

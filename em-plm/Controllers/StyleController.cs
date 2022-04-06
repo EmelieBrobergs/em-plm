@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace em_plm.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/style")]
 public class StyleController : ControllerBase
 {
     private readonly ILogger<StyleController> _logger;
@@ -24,12 +24,19 @@ public class StyleController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<StyleViewModel>> Create(StyleViewModel styleViewModel, CancellationToken cancellationToken)
+    public async Task<ActionResult<StyleViewModel>> CreateAsync(StyleViewModel model, CancellationToken cancellationToken)
     {
-        var style = _mapper.Map<Style>(styleViewModel);
+        if (model is null)
+        {
+            throw new ArgumentException(nameof(model));
+        }
 
         try
         {
+            var errorMessage = Check_StyleNumber_CompanyId_Constrain(model);
+            if (errorMessage != null) { throw new Exception(errorMessage); }
+
+            var style = _mapper.Map<Style>(model);
             await _applicationDbContext.Styles.AddAsync(style, cancellationToken);
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
           
@@ -41,14 +48,14 @@ public class StyleController : ControllerBase
         }
     }
 
-    [HttpGet("{styleId}")]
-    public IActionResult GetStyle(int styleId, CancellationToken cancellationToken)
+    [HttpGet("{styleId:int}")]
+    public ActionResult<StyleViewModel> Get(int styleId, CancellationToken cancellationToken)
     {
         try
         {
             var style = _applicationDbContext.Styles.FirstOrDefault(s => s.Id == styleId);
-            if (style != null) return Ok(style);
-            return NotFound("No style found with matching Id");
+            if (style is null) { throw new Exception("Could not find style with matching Id"); }
+            return Ok(_mapper.Map<StyleViewModel>(style));
 
         }
         catch (Exception ex)
@@ -58,7 +65,7 @@ public class StyleController : ControllerBase
     }
 
     [HttpGet("get-by-company/{companyId:int}")]
-    public async Task<ActionResult<StyleViewModel[]>> GetByCompany(int companyId, CancellationToken cancellationToken)
+    public async Task<ActionResult<StyleViewModel[]>> GetByCompanyAsync(int companyId, CancellationToken cancellationToken)
     {
         // TODO: Lägg till kontroll av JWT att användare tillhör företaget ?
         try
@@ -67,9 +74,9 @@ public class StyleController : ControllerBase
                 .Where(s => s.CompanyId == companyId)
                 .AsNoTracking();
 
-            if (await styles.AnyAsync(cancellationToken)) return Ok(await styles.ToArrayAsync(cancellationToken));
-
-            return NotFound("No styles found on assosiated Company");
+            if (await styles.AnyAsync(cancellationToken) == false) { throw new Exception("No Styles found on assosiated Company");  } 
+            
+            return Ok(await styles.ToArrayAsync(cancellationToken));
         }
         catch (Exception ex)
         {
@@ -78,7 +85,7 @@ public class StyleController : ControllerBase
     }
 
     [HttpPatch]
-    public async Task<ActionResult<StyleViewModel>> EditStyleAsync([FromBody] EditStyleViewModel model, CancellationToken cancellationToken)
+    public async Task<ActionResult<StyleViewModel>> EditAsync([FromBody] StyleViewModel model, CancellationToken cancellationToken)
     {
         if (model is null)
         {
@@ -87,18 +94,76 @@ public class StyleController : ControllerBase
 
         try
         {
-            var existingStyle = _applicationDbContext.Styles.FirstOrDefault(s => s.Id == model.Id);
+            var errorMessage = Check_StyleNumber_CompanyId_Constrain(model);
+            if (errorMessage != null) { throw new Exception(errorMessage); }
 
-            if(existingStyle is null) { throw new Exception("Could not find styleto update."); }
+            var existingStyle = _applicationDbContext.Styles.FirstOrDefault(s => s.Id == model.Id);
+            if(existingStyle is null) { throw new Exception("Could not find style to update."); }
 
             _applicationDbContext.Entry(existingStyle).CurrentValues.SetValues(model);
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
-            return Ok(existingStyle);
+            return Ok(_mapper.Map<StyleViewModel>(existingStyle));
         }
         catch (Exception ex)
         {
-            return BadRequest(ex);
+            return BadRequest(ex.Message);
         }
     }
+
+    [HttpDelete("{styleId:int}")]
+    public async Task<IActionResult> DeleteAsync(int styleId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var style = _applicationDbContext.Styles.FirstOrDefault(s => s.Id == styleId);
+            if (style is null) { throw new Exception("Could not find style to delete."); }
+            _applicationDbContext.Styles.Remove(style);
+            await _applicationDbContext.SaveChangesAsync(cancellationToken);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete("delete-by-company/{companyId:int}")]
+    public async Task<IActionResult> DeleteByCompanyAsync(int companyId, CancellationToken cancellationToken)
+    {
+        // TODO: Lägg till kontroll av JWT att användare tillhör företaget ?
+        // TODO: Kontroll av AppUser-Role ?
+        try
+        {
+            var styles = _applicationDbContext.Styles
+                .Where(s => s.CompanyId == companyId)
+                .AsNoTracking();
+
+            if (await styles.AnyAsync(cancellationToken) == false) { throw new Exception("No Styles found on assosiated Company to delete"); }
+            _applicationDbContext.Styles.RemoveRange(styles);
+            await _applicationDbContext.SaveChangesAsync(cancellationToken);
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    //*********************************************************
+    //*********     PRIVATE FUNCTION      *********************
+    //*********************************************************
+    /// <summary>
+    /// Check constrins added to db tables throw EF code first in Context file
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns>Error message or null</returns>
+    private string? Check_StyleNumber_CompanyId_Constrain(StyleViewModel model)
+    {
+        var checkStyleNumberCompanyIdConstrain = _applicationDbContext.Styles.FirstOrDefault(s => s.StyleNumber == model.StyleNumber && s.CompanyId == model.CompanyId && s.Id != model.Id);
+        if (checkStyleNumberCompanyIdConstrain != null) return "Style number is taken, must be unique for each style of a Company.";
+        return null;
+    }
+
 }

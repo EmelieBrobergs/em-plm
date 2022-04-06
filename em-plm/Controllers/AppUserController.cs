@@ -10,7 +10,7 @@ using Domain.Entities;
 namespace em_plm.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/appuser")]
 public class AppUserController : ControllerBase
 {
     private readonly ILogger<AppUserController> _logger;
@@ -173,13 +173,13 @@ public class AppUserController : ControllerBase
         }
     }
 
-    [HttpPatch("{id}")]
+    [HttpPatch("edit-password/{userId}")]
     [Authorize]
-    public async Task<ActionResult> EditUserPassword(string id, [FromBody] EditUserPasswordViewModel data, CancellationToken cancellationToken)
+    public async Task<ActionResult> EditUserPassword(string userId, [FromBody] EditUserPasswordViewModel data, CancellationToken cancellationToken)
     {
         try
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {
                 var changePassword = _userManager.ChangePasswordAsync(user, data.OldPass, data.NewPass);
