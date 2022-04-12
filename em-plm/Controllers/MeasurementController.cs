@@ -61,18 +61,23 @@ public class MeasurementController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// To fetch all Measurement registerd on a Style
+    /// </summary>
+    /// <param name="styleId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>MeasurementViewModel[] or []</returns>
     [HttpGet("get-by-style/{styleId:int}")]
     public async Task<ActionResult<MeasurementViewModel[]>> GetByStyleAsync(int styleId, CancellationToken cancellationToken)
     {
         try
         {
-            var measurements = _applicationDbContext.Measurements
+            var measurements = await _applicationDbContext.Measurements
                 .Where(m => m.StyleId == styleId)
-                .AsNoTracking();
+                .AsNoTracking()
+                .ToArrayAsync(cancellationToken);
 
-            if (await measurements.AnyAsync(cancellationToken)) return Ok(await measurements.ToArrayAsync(cancellationToken));
-
-            return NotFound("No Measurements found on assosiated Style");
+            return Ok(_mapper.Map<MeasurementViewModel[]>(measurements));
         }
         catch (Exception ex)
         {

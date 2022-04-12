@@ -14,10 +14,11 @@ namespace Application.Common.Models
 
         public int Id { get; set; }
         public int? ParentMeasurementId { get; set; }
-        public Measurement? ParentMeasurement { get; set; }
+        public DateTime CreatedDate { get; private set; }
+        // public Measurement? ParentMeasurement { get; set; }
         public string Name { get; set; } = null!;
-        public SizeRange SizeRange { get; set; } = null;
-        public ICollection<MeasurementPoint> MeasurementPoints { get; set; } = new List<MeasurementPoint>();
+        //public SizeRangeViewModel SizeRange { get; set; } = null;
+        //public ICollection<MeasurementPointViewModel> MeasurementPoints { get; set; } = new List<MeasurementPointViewModel>();
         public UnitOfMeasureEnum UnitOfMeasure { get; set; }
         public int? StyleId { get; set; }
     }

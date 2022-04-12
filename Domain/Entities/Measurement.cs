@@ -6,7 +6,12 @@ namespace Domain.Entities
 {
     public class Measurement
     {
+        public Measurement()
+        {
+            CreatedDate = DateTime.Now;
+        }
         public int Id { get; set; }
+        public DateTime CreatedDate { get; private set; }
         public int? ParentMeasurementId { get; set; }
         public Measurement? ParentMeasurement { get; set; }
 

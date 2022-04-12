@@ -49,12 +49,20 @@ public class StyleController : ControllerBase
     }
 
     [HttpGet("{styleId:int}")]
-    public ActionResult<StyleViewModel> Get(int styleId, CancellationToken cancellationToken)
+    public async Task<ActionResult<StyleViewModel>> GetAsync(int styleId, CancellationToken cancellationToken)
     {
         try
         {
-            var style = _applicationDbContext.Styles.FirstOrDefault(s => s.Id == styleId);
+            var style = _applicationDbContext.Styles
+                .Include(s => s.Fittings)
+                .Include(s => s.Measurements)
+                    .ThenInclude(me => me.SizeRange)
+                        .ThenInclude(sr => sr.Sizes)
+                .Include(s => s.Measurements)
+                    .ThenInclude(me => me.MeasurementPoints)
+                .FirstOrDefault(s => s.Id == styleId);
             if (style is null) { throw new Exception("Could not find style with matching Id"); }
+
             return Ok(_mapper.Map<StyleViewModel>(style));
 
         }
@@ -64,19 +72,23 @@ public class StyleController : ControllerBase
         }
     }
 
+
     [HttpGet("get-by-company/{companyId:int}")]
     public async Task<ActionResult<StyleViewModel[]>> GetByCompanyAsync(int companyId, CancellationToken cancellationToken)
     {
-        // TODO: Lägg till kontroll av JWT att användare tillhör företaget ?
+        // TODO: Vill få med storleksbågen ( = size Range i senaste skapade måttlistan på stylen)
         try
         {
-            var styles = _applicationDbContext.Styles
+            var styles = await _applicationDbContext.Styles
+                .Include(s => s.Fittings)
+                 .Include(s => s.Measurements)
                 .Where(s => s.CompanyId == companyId)
-                .AsNoTracking();
+                .AsNoTracking()
+                .ToArrayAsync(cancellationToken);
 
-            if (await styles.AnyAsync(cancellationToken) == false) { throw new Exception("No Styles found on assosiated Company");  } 
-            
-            return Ok(await styles.ToArrayAsync(cancellationToken));
+            //if (styles.Length == 0) { throw new Exception("No Styles found on assosiated Company");  }
+    
+            return Ok(_mapper.Map<StyleViewModel[]>(styles));  // fel returvärde ?
         }
         catch (Exception ex)
         {
