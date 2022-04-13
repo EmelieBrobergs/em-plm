@@ -22,7 +22,7 @@ namespace Application.Common.Models
         public string ProductGroup { get; set; } = null!;
 
         public List<string> Tags { get; set; } = null!;
-        public ICollection<MeasurementViewModel> Measurements { get; set; } = new List<MeasurementViewModel>();
+        //public ICollection<MeasurementViewModel> Measurements { get; set; } = new List<MeasurementViewModel>();
         //public ICollection<FittingViewModel> Fittings { get; set; } = new List<FittingViewModel>();
 
         public int CompanyId { get; set; }

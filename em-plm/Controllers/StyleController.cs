@@ -54,12 +54,12 @@ public class StyleController : ControllerBase
         try
         {
             var style = _applicationDbContext.Styles
-                .Include(s => s.Fittings)
-                .Include(s => s.Measurements)
-                    .ThenInclude(me => me.SizeRange)
-                        .ThenInclude(sr => sr.Sizes)
-                .Include(s => s.Measurements)
-                    .ThenInclude(me => me.MeasurementPoints)
+                //.Include(s => s.Fittings)
+                //.Include(s => s.Measurements)
+                //    .ThenInclude(me => me.SizeRange)
+                //        .ThenInclude(sr => sr.Sizes)
+                //.Include(s => s.Measurements)
+                //    .ThenInclude(me => me.MeasurementPoints)
                 .FirstOrDefault(s => s.Id == styleId);
             if (style is null) { throw new Exception("Could not find style with matching Id"); }
 
@@ -80,8 +80,8 @@ public class StyleController : ControllerBase
         try
         {
             var styles = await _applicationDbContext.Styles
-                .Include(s => s.Fittings)
-                 .Include(s => s.Measurements)
+                //.Include(s => s.Fittings)
+                // .Include(s => s.Measurements)
                 .Where(s => s.CompanyId == companyId)
                 .AsNoTracking()
                 .ToArrayAsync(cancellationToken);

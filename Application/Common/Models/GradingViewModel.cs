@@ -12,9 +12,9 @@ namespace Application.Common.Models
     {
         public int Id { get; set; }
         public int SizeId { get; set; }
-        public SizeViewModel Size { get; set; } = null!;
+        //public SizeViewModel Size { get; set; } = null!;
         public int MeasurementPointId { get; set; }
-        public MeasurementPointViewModel MeasurementPoint { get; set; } = null!;
+        //public MeasurementPointViewModel MeasurementPoint { get; set; } = null!;
         public float Value { get; set; }  //A clculated value in relation to OrderdIndex and base size.Only base size have an actual value... If baseSize changed, the value here will be converted...as well.
     }
 }

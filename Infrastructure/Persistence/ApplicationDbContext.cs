@@ -66,6 +66,8 @@ public class ApplicationDbContext : IdentityDbContext<
 
         modelBuilder.Entity<MeasurementPoint>().HasIndex(m => new { m.ShortName, m.MeasurementId }).IsUnique(true);
 
+        // TODO: Skriva constrain för Grading. g = new { g.SizeId, g.MeasurementPointId }
+
         modelBuilder.Entity<Style>()
             .Property(e => e.Tags)
             .HasConversion(

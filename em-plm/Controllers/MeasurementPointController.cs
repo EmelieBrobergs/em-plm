@@ -13,11 +13,11 @@ namespace em_plm.Controllers;
 [Route("api/measurementpoint")]
 public class MeasurementPointController : ControllerBase
 {
-    private readonly ILogger<StyleController> _logger;
+    private readonly ILogger<MeasurementPointController> _logger;
     private readonly IApplicationDbContext _applicationDbContext;
     private readonly IMapper _mapper;
 
-    public MeasurementPointController(ILogger<StyleController> logger, IApplicationDbContext applicationDbContext, IMapper mapper)
+    public MeasurementPointController(ILogger<MeasurementPointController> logger, IApplicationDbContext applicationDbContext, IMapper mapper)
 
     {
         _logger = logger;

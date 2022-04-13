@@ -15,6 +15,7 @@ public class MappingProfile : Profile
         CreateMap<CompanyViewModel, Company>().ReverseMap();
         CreateMap<SizeRangeViewModel,SizeRange>().ReverseMap();
         CreateMap<SizeViewModel, Size>().ReverseMap();
+        CreateMap<GradingViewModel, Grading>().ReverseMap();
 
 
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());

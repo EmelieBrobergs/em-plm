@@ -11,7 +11,7 @@ namespace Application.Common.Models
     public class SizeRangeViewModel
     {
         public int Id { get; set; }
-        public ICollection<Size> Sizes { get; set; } = new List<Size>();
+        public ICollection<SizeViewModel> Sizes { get; set; } = new List<SizeViewModel>();
         public string BaseSizeName { get; set; } 
         public int MeasurementId { get; set; }
         //public Measurement Measurement { get; set; } = null!;

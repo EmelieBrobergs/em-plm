@@ -188,34 +188,34 @@ namespace Infrastructure.Persistence
                 new Size { Id = 15, SizeRangeId = 3, Name = "XL", OrderdIndex = 5 },
 
                 // style 2 = 1 Measurement
-                new Size { Id = 16, SizeRangeId = 3, Name = "XS", OrderdIndex = 1 },
-                new Size { Id = 17, SizeRangeId = 3, Name = "S", OrderdIndex = 2 },
-                new Size { Id = 18, SizeRangeId = 3, Name = "M", OrderdIndex = 3 },
-                new Size { Id = 19, SizeRangeId = 3, Name = "L", OrderdIndex = 4 },
-                new Size { Id = 20, SizeRangeId = 3, Name = "XL", OrderdIndex = 5 },
+                new Size { Id = 16, SizeRangeId = 4, Name = "XS", OrderdIndex = 1 },
+                new Size { Id = 17, SizeRangeId = 4, Name = "S", OrderdIndex = 2 },
+                new Size { Id = 18, SizeRangeId = 4, Name = "M", OrderdIndex = 3 },
+                new Size { Id = 19, SizeRangeId = 4, Name = "L", OrderdIndex = 4 },
+                new Size { Id = 20, SizeRangeId = 4, Name = "XL", OrderdIndex = 5 },
                 
                 // style 3 = 1 Measurement
-                new Size { Id = 21, SizeRangeId = 3, Name = "34", OrderdIndex = 1 },
-                new Size { Id = 22, SizeRangeId = 3, Name = "36", OrderdIndex = 2 },
-                new Size { Id = 23, SizeRangeId = 3, Name = "38", OrderdIndex = 3 },
-                new Size { Id = 24, SizeRangeId = 3, Name = "40", OrderdIndex = 4 },
-                new Size { Id = 25, SizeRangeId = 3, Name = "42", OrderdIndex = 5 },
-                new Size { Id = 26, SizeRangeId = 3, Name = "44", OrderdIndex = 6 },
+                new Size { Id = 21, SizeRangeId = 5, Name = "34", OrderdIndex = 1 },
+                new Size { Id = 22, SizeRangeId = 5, Name = "36", OrderdIndex = 2 },
+                new Size { Id = 23, SizeRangeId = 5, Name = "38", OrderdIndex = 3 },
+                new Size { Id = 24, SizeRangeId = 5, Name = "40", OrderdIndex = 4 },
+                new Size { Id = 25, SizeRangeId = 5, Name = "42", OrderdIndex = 5 },
+                new Size { Id = 26, SizeRangeId = 5, Name = "44", OrderdIndex = 6 },
 
                 // style 4 = 2 Measurement
-                new Size { Id = 27, SizeRangeId = 3, Name = "34", OrderdIndex = 1 },
-                new Size { Id = 28, SizeRangeId = 3, Name = "36", OrderdIndex = 2 },
-                new Size { Id = 29, SizeRangeId = 3, Name = "38", OrderdIndex = 3 },
-                new Size { Id = 30, SizeRangeId = 3, Name = "40", OrderdIndex = 4 },
-                new Size { Id = 31, SizeRangeId = 3, Name = "42", OrderdIndex = 5 },
-                new Size { Id = 32, SizeRangeId = 3, Name = "44", OrderdIndex = 6 },
+                new Size { Id = 27, SizeRangeId = 6, Name = "34", OrderdIndex = 1 },
+                new Size { Id = 28, SizeRangeId = 6, Name = "36", OrderdIndex = 2 },
+                new Size { Id = 29, SizeRangeId = 6, Name = "38", OrderdIndex = 3 },
+                new Size { Id = 30, SizeRangeId = 6, Name = "40", OrderdIndex = 4 },
+                new Size { Id = 31, SizeRangeId = 6, Name = "42", OrderdIndex = 5 },
+                new Size { Id = 32, SizeRangeId = 6, Name = "44", OrderdIndex = 6 },
 
-                new Size { Id = 33, SizeRangeId = 3, Name = "34", OrderdIndex = 1 },
-                new Size { Id = 34, SizeRangeId = 3, Name = "36", OrderdIndex = 2 },
-                new Size { Id = 35, SizeRangeId = 3, Name = "38", OrderdIndex = 3 },
-                new Size { Id = 36, SizeRangeId = 3, Name = "40", OrderdIndex = 4 },
-                new Size { Id = 37, SizeRangeId = 3, Name = "42", OrderdIndex = 5 },
-                new Size { Id = 38, SizeRangeId = 3, Name = "44", OrderdIndex = 6 }
+                new Size { Id = 33, SizeRangeId = 7, Name = "34", OrderdIndex = 1 },
+                new Size { Id = 34, SizeRangeId = 7, Name = "36", OrderdIndex = 2 },
+                new Size { Id = 35, SizeRangeId = 7, Name = "38", OrderdIndex = 3 },
+                new Size { Id = 36, SizeRangeId = 7, Name = "40", OrderdIndex = 4 },
+                new Size { Id = 37, SizeRangeId = 7, Name = "42", OrderdIndex = 5 },
+                new Size { Id = 38, SizeRangeId = 7, Name = "44", OrderdIndex = 6 }
             );
             // MeasurementPoint
             modelBuilder.Entity<MeasurementPoint>().HasData(

@@ -62,19 +62,26 @@ public class SizeRangeController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="measurementId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet("get-by-measurement/{measurementId:int}")]
-    public async Task<ActionResult<SizeRangeViewModel[]>> GetByMeasurementAsync(int measurementId, CancellationToken cancellationToken)
+    public async Task<ActionResult<SizeRangeViewModel>> GetByMeasurementAsync(int measurementId, CancellationToken cancellationToken)
     {
         // TODO: Lägg till kontroll av JWT att användare tillhör företaget ?
         try
         {
-            var sizeRange = _applicationDbContext.SizeRanges
-                .Where(s => s.MeasurementId == measurementId)
-                .AsNoTracking();
+            var sizeRange = await _applicationDbContext.SizeRanges
+                .Include(sr => sr.Sizes)
+                .FirstOrDefaultAsync(s => s.MeasurementId == measurementId, cancellationToken);
 
-            if (await sizeRange.AnyAsync(cancellationToken) == false) { throw new Exception("No SizeRange found on assosiated Measurement");  } 
+            //if (await sizeRange.AnyAsync(cancellationToken) == false) { throw new Exception("No SizeRange found on assosiated Measurement");  } 
+            if (sizeRange is null) { return NoContent(); }
             
-            return Ok(await sizeRange.ToArrayAsync(cancellationToken));
+            return Ok(_mapper.Map<SizeRangeViewModel>(sizeRange));
         }
         catch (Exception ex)
         {
