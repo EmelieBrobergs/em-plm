@@ -16,6 +16,9 @@ public interface IApplicationDbContext
     DbSet<SizeRange> SizeRanges { get; set; }
     DbSet<Size> Sizes { get; set; }
     DbSet<Grading> Gradings { get; set; }
+    DbSet<Respond> Responds { get; set; }
+    DbSet<Sample> Samples { get; set; }
+    DbSet<SampleMeasurement> SampleMeasurements { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

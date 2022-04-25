@@ -9,13 +9,16 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        // TODO: Decide one way of using this, etherlike bolow or implument the interface on entity class
+        // TODO: Decide one way of using this, etherlike beylow or implument the interface on entity class
         CreateMap<StyleViewModel, Style>().ReverseMap();
         CreateMap<MeasurementViewModel, Measurement>().ReverseMap();
         CreateMap<CompanyViewModel, Company>().ReverseMap();
         CreateMap<SizeRangeViewModel,SizeRange>().ReverseMap();
         CreateMap<SizeViewModel, Size>().ReverseMap();
         CreateMap<GradingViewModel, Grading>().ReverseMap();
+        CreateMap<RespondViewModel, Respond>().ReverseMap();
+        CreateMap<SampleViewModel, Sample>().ReverseMap();
+        CreateMap<SampleMeasurementViewModel, SampleMeasurement>().ReverseMap();
 
 
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());

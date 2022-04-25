@@ -22,18 +22,39 @@ public class MeasurementController : ControllerBase
         _applicationDbContext = applicationDbContext;
         _mapper = mapper;
     }
-
-    [HttpPost]
-    public async Task<ActionResult<MeasurementViewModel>> CreateAsync( MeasurementViewModel model, CancellationToken cancellationToken)
+    /// <summary>
+    /// The post should include SizeRange and Size
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpPost("{sizerange-and-sizes}")]
+    public async Task<ActionResult<MeasurementViewModel>> CreateAsync([FromBody] MeasurementViewModel model, CancellationToken cancellationToken)
     {
-        var measurement = _mapper.Map<Measurement>(model);
+        // Nytt measurement ska skapas
+        // Nytt SizeRange ska skapas med MeasurementId
+        // Flera nya Size ska skapas med SizeRangeId
+
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
 
         try
         {
+            // Measurement
+            var measurement = _mapper.Map<Measurement>(model);
             await _applicationDbContext.Measurements.AddAsync(measurement, cancellationToken);
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
-            return Ok(_mapper.Map<MeasurementViewModel>(measurement));
+            var resultMeasurement = _applicationDbContext.Measurements
+                .Include(m => m.SizeRange)
+                .ThenInclude(sr => sr.Sizes)
+                .FirstOrDefault(m => m.Id == measurement.Id);
+            // Är helt onödigt att mappa tillbaka oförändrat objekt???
+            //return Ok(_mapper.Map<MeasurementViewModel>(measurement));
+            return Ok(_mapper.Map<MeasurementViewModel>(resultMeasurement));
+
         }
         catch (Exception ex)
         {

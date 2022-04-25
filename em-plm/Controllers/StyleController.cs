@@ -34,12 +34,13 @@ public class StyleController : ControllerBase
         try
         {
             var errorMessage = Check_StyleNumber_CompanyId_Constrain(model);
-            if (errorMessage != null) { throw new Exception(errorMessage); }
+            if (errorMessage != null) { throw new Exception(errorMessage); } // Vilket fel vill jag retunera till UI här?
 
             var style = _mapper.Map<Style>(model);
             await _applicationDbContext.Styles.AddAsync(style, cancellationToken);
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
-          
+
+            // Är helt onödigt att mappa tillbaka oförändrat objekt???
             return Ok(_mapper.Map<StyleViewModel>(style));
         }
         catch (Exception ex)
@@ -54,12 +55,6 @@ public class StyleController : ControllerBase
         try
         {
             var style = _applicationDbContext.Styles
-                //.Include(s => s.Fittings)
-                //.Include(s => s.Measurements)
-                //    .ThenInclude(me => me.SizeRange)
-                //        .ThenInclude(sr => sr.Sizes)
-                //.Include(s => s.Measurements)
-                //    .ThenInclude(me => me.MeasurementPoints)
                 .FirstOrDefault(s => s.Id == styleId);
             if (style is null) { throw new Exception("Could not find style with matching Id"); }
 
@@ -80,15 +75,11 @@ public class StyleController : ControllerBase
         try
         {
             var styles = await _applicationDbContext.Styles
-                //.Include(s => s.Fittings)
-                // .Include(s => s.Measurements)
                 .Where(s => s.CompanyId == companyId)
                 .AsNoTracking()
                 .ToArrayAsync(cancellationToken);
 
-            //if (styles.Length == 0) { throw new Exception("No Styles found on assosiated Company");  }
-    
-            return Ok(_mapper.Map<StyleViewModel[]>(styles));  // fel returvärde ?
+            return Ok(_mapper.Map<StyleViewModel[]>(styles));
         }
         catch (Exception ex)
         {

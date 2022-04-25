@@ -24,7 +24,7 @@ public class SizeRangeController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<SizeRangeViewModel>> CreateAsync(SizeRangeViewModel model, CancellationToken cancellationToken)
+    public async Task<ActionResult<SizeRangeViewModel>> CreateAsync([FromBody] SizeRangeViewModel model, CancellationToken cancellationToken)
     {
         if (model is null)
         {

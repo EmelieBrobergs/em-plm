@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220420093507_4th")]
+    partial class _4th
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,7 +116,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 1,
                             AccessFailedCount = 0,
                             CompanyId = 1,
-                            ConcurrencyStamp = "58b819db-3440-4677-90c8-c4969d980417",
+                            ConcurrencyStamp = "cac84e19-fb19-4c03-b153-5cf06b0ed1ed",
                             Email = "em@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Emssi",
@@ -122,7 +124,7 @@ namespace Infrastructure.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EM@MAIL.COM",
                             NormalizedUserName = "EMHOUSE",
-                            PasswordHash = "AQAAAAEAACcQAAAAECcdsWwX7ddtD31jKkpcKng3ssnbj8En/DoAHjZog+Cn+ZLdFVG6d3iPb+lEQBavTQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIFT7fdNe6jJAj0ov1Tjl7VP9U17ceQeiIbV6ouh48gQBhpg3T1WOHOcROmF5sBIig==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "emhouse"
@@ -132,7 +134,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 2,
                             AccessFailedCount = 0,
                             CompanyId = 3,
-                            ConcurrencyStamp = "9a0c7440-af29-44d1-8e5b-07ecb97267ea",
+                            ConcurrencyStamp = "8077cc28-0474-4143-9f1a-5bcc64f822b6",
                             Email = "bella@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Bella",
@@ -140,7 +142,7 @@ namespace Infrastructure.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "BELLA@MAIL.COM",
                             NormalizedUserName = "BELLA@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBSMhbKeQvBDpv8F+WJflIhocUQzDoiTrAJydENmKjz6yLMp1x2xIjQaWoZHDYNM7A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMDQUXJJEhpupCpZLHaU/4rfcbtCMy14TaiStnOVMCXKykK9QCTCKByJgl1gZeLhsA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "bella@mail.com"
@@ -150,7 +152,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 3,
                             AccessFailedCount = 0,
                             CompanyId = 1,
-                            ConcurrencyStamp = "149b886f-b192-4ace-bcef-5af04a2ff212",
+                            ConcurrencyStamp = "b65a0508-d79d-4472-b875-cb453c422c1d",
                             Email = "b@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Basic",
@@ -158,7 +160,7 @@ namespace Infrastructure.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "B@MAIL.COM",
                             NormalizedUserName = "B@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKNqYJzKNfhElepmyj42nPYDep48C59RDhZDXW4l3OAMHcEQd+n5EwH86KmTDwO/Kw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBKCLLx0dLctwcb4iXB1puInwRqYUaRG+7IrlcbmStAagjIoASWfqNLg3jC1sEIwhg==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "b@mail.com"
@@ -168,7 +170,7 @@ namespace Infrastructure.Persistence.Migrations
                             Id = 4,
                             AccessFailedCount = 0,
                             CompanyId = 1,
-                            ConcurrencyStamp = "eebaa753-3922-48fb-a781-fa5476e5cc48",
+                            ConcurrencyStamp = "2f595cad-890d-4c6f-ae93-5455851663a7",
                             Email = "emma@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Emma",
@@ -176,7 +178,7 @@ namespace Infrastructure.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EMMA@MAIL.COM",
                             NormalizedUserName = "EMMAH",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAc1eRHrgH5LY9VMdfb7MiXnTZ20yjWHe5fXZmVSZIqrpL1ITmchY6CzqO2LLP5yaQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYr9s1B3nCD4vf//S6evx+xLnalye+VHbatEL14CZ4tfSlivucmq+LX3Xm3VnfrBA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "emmah"
@@ -3635,7 +3637,7 @@ namespace Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 4, 20, 13, 30, 8, 287, DateTimeKind.Local).AddTicks(9522),
+                            CreatedDate = new DateTime(2022, 4, 20, 11, 35, 5, 975, DateTimeKind.Local).AddTicks(1374),
                             Name = "1st",
                             StyleId = 1,
                             UnitOfMeasure = 0
@@ -3643,7 +3645,7 @@ namespace Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 4, 20, 13, 30, 8, 287, DateTimeKind.Local).AddTicks(9560),
+                            CreatedDate = new DateTime(2022, 4, 20, 11, 35, 5, 975, DateTimeKind.Local).AddTicks(1412),
                             Name = "2nd",
                             StyleId = 1,
                             UnitOfMeasure = 0
@@ -3651,7 +3653,7 @@ namespace Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 4, 20, 13, 30, 8, 287, DateTimeKind.Local).AddTicks(9563),
+                            CreatedDate = new DateTime(2022, 4, 20, 11, 35, 5, 975, DateTimeKind.Local).AddTicks(1415),
                             Name = "3d",
                             StyleId = 1,
                             UnitOfMeasure = 0
@@ -3659,7 +3661,7 @@ namespace Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2022, 4, 20, 13, 30, 8, 287, DateTimeKind.Local).AddTicks(9566),
+                            CreatedDate = new DateTime(2022, 4, 20, 11, 35, 5, 975, DateTimeKind.Local).AddTicks(1418),
                             Name = "1st",
                             ParentMeasurementId = 3,
                             StyleId = 2,
@@ -3668,7 +3670,7 @@ namespace Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2022, 4, 20, 13, 30, 8, 287, DateTimeKind.Local).AddTicks(9568),
+                            CreatedDate = new DateTime(2022, 4, 20, 11, 35, 5, 975, DateTimeKind.Local).AddTicks(1421),
                             Name = "1st",
                             StyleId = 3,
                             UnitOfMeasure = 0
@@ -3676,7 +3678,7 @@ namespace Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2022, 4, 20, 13, 30, 8, 287, DateTimeKind.Local).AddTicks(9571),
+                            CreatedDate = new DateTime(2022, 4, 20, 11, 35, 5, 975, DateTimeKind.Local).AddTicks(1423),
                             Name = "1st",
                             StyleId = 4,
                             UnitOfMeasure = 0
@@ -3684,7 +3686,7 @@ namespace Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2022, 4, 20, 13, 30, 8, 287, DateTimeKind.Local).AddTicks(9573),
+                            CreatedDate = new DateTime(2022, 4, 20, 11, 35, 5, 975, DateTimeKind.Local).AddTicks(1426),
                             Name = "2nd",
                             StyleId = 4,
                             UnitOfMeasure = 0
@@ -4476,42 +4478,15 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int>("RespondId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SizeId")
-                        .HasColumnType("int");
+                    b.Property<string>("SizeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RespondId");
 
-                    b.HasIndex("SizeId");
-
                     b.ToTable("Samples");
-                });
-
-            modelBuilder.Entity("Domain.Entities.SampleMeasurement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("MeasurementPointId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SampleId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("Value")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MeasurementPointId");
-
-                    b.HasIndex("SampleId");
-
-                    b.ToTable("SampleMeasurements");
                 });
 
             modelBuilder.Entity("Domain.Entities.Size", b =>
@@ -5458,30 +5433,7 @@ namespace Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Size", "Size")
-                        .WithMany()
-                        .HasForeignKey("SizeId");
-
                     b.Navigation("Respond");
-
-                    b.Navigation("Size");
-                });
-
-            modelBuilder.Entity("Domain.Entities.SampleMeasurement", b =>
-                {
-                    b.HasOne("Domain.Entities.MeasurementPoint", "MeasurementPoint")
-                        .WithMany()
-                        .HasForeignKey("MeasurementPointId");
-
-                    b.HasOne("Domain.Entities.Sample", "Sample")
-                        .WithMany("SampleMeasurements")
-                        .HasForeignKey("SampleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MeasurementPoint");
-
-                    b.Navigation("Sample");
                 });
 
             modelBuilder.Entity("Domain.Entities.Size", b =>
@@ -5584,11 +5536,6 @@ namespace Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Respond", b =>
                 {
                     b.Navigation("Samples");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Sample", b =>
-                {
-                    b.Navigation("SampleMeasurements");
                 });
 
             modelBuilder.Entity("Domain.Entities.SizeRange", b =>

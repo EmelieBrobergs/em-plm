@@ -137,17 +137,17 @@ namespace Infrastructure.Persistence
             // Measurements
             modelBuilder.Entity<Measurement>().HasData(
                 // Style 1
-                new Measurement { Id = 1, Name = "1st", UnitOfMeasure = Domain.Common.Enums.UnitOfMeasureEnum.cm, StyleId = 1},
-                new Measurement { Id = 2, Name = "2nd", UnitOfMeasure = Domain.Common.Enums.UnitOfMeasureEnum.cm, StyleId = 1 },
-                new Measurement { Id = 3, Name = "3d", UnitOfMeasure = Domain.Common.Enums.UnitOfMeasureEnum.cm, StyleId = 1 },
+                new Measurement { Id = 1, Name = "1st", StyleId = 1},
+                new Measurement { Id = 2, Name = "2nd", StyleId = 1 },
+                new Measurement { Id = 3, Name = "3d", StyleId = 1 },
 
                 // style 2,3
-                new Measurement { Id = 4, Name = "1st", UnitOfMeasure = Domain.Common.Enums.UnitOfMeasureEnum.cm, StyleId = 2, ParentMeasurementId = 3 },
-                new Measurement { Id = 5, Name = "1st", UnitOfMeasure = Domain.Common.Enums.UnitOfMeasureEnum.cm, StyleId = 3 },
+                new Measurement { Id = 4, Name = "1st", StyleId = 2, ParentMeasurementId = 3 },
+                new Measurement { Id = 5, Name = "1st", StyleId = 3 },
                 
                 // style 4
-                new Measurement { Id = 6, Name = "1st", UnitOfMeasure = Domain.Common.Enums.UnitOfMeasureEnum.cm, StyleId = 4 },
-                new Measurement { Id = 7, Name = "2nd", UnitOfMeasure = Domain.Common.Enums.UnitOfMeasureEnum.cm, StyleId = 4}
+                new Measurement { Id = 6, Name = "1st", StyleId = 4 },
+                new Measurement { Id = 7, Name = "2nd", StyleId = 4}
             );
 
             // SizeRange

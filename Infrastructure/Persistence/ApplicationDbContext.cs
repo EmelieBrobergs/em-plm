@@ -34,6 +34,10 @@ public class ApplicationDbContext : IdentityDbContext<
     public virtual DbSet<SizeRange> SizeRanges { get; set; } = null!;
     public virtual DbSet<Size> Sizes { get; set; } = null!;
     public virtual DbSet<Grading> Gradings { get; set; } = null!;
+    public virtual DbSet<Respond> Responds { get; set; } = null!;
+    public virtual DbSet<Sample> Samples { get; set; } = null!;
+    public virtual DbSet<SampleMeasurement> SampleMeasurements { get; set; } = null!;
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -73,13 +77,5 @@ public class ApplicationDbContext : IdentityDbContext<
             .HasConversion(
                 v => string.Join(',', v), // send to db
                 v => new List<string>(v.Split(',', StringSplitOptions.RemoveEmptyEntries))); // fetch from db
-
-        //v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList()
-        //            .Distinct(StringComparer.OrdinalIgnoreCase)
-        //            .ToArray(), new ValueComparer<ICollection<string>>(
-        //            (c1, c2) => c1.SequenceEqual(c2),
-        //            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-        //            c => c.ToList()));
-
     }
 }
